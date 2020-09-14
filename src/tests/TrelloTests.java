@@ -172,6 +172,9 @@ public class TrelloTests {
                 .xpath("//li[@class='boards-page-board-section-list-item'][.//div[@title ='QA Haifa7']]"));
         qa7HaifaBoard.click();
         Thread.sleep(3000);
+        System.out.println("Lists quantity before: " + driver
+                .findElements(By.xpath("//div[@class = 'list js-list-content']"))
+                .size());
         //Press 'Add list' or 'Add another list'
         WebElement addListButton = driver.findElement(By.xpath("//span[@class='placeholder']"));
         addListButton.click();
@@ -185,6 +188,9 @@ public class TrelloTests {
         //Cancel the new adding list control
         WebElement xButton = driver.findElement(By.cssSelector("a.icon-close.dark-hover"));
         xButton.click();
+        System.out.println("Lists quantity after: " + driver
+                .findElements(By.xpath("//div[@class = 'list js-list-content']"))
+                .size());
 
         driver.quit();
     }
