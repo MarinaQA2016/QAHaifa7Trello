@@ -42,7 +42,7 @@ public class CurrentBoardTests extends TestBase {
     }
 
     @Test
-    public void CreateListPositive() throws InterruptedException {
+    public void createListPositive() throws InterruptedException {
 
         System.out.println("Lists quantity before: " + driver
                 .findElements(By.xpath("//div[@class = 'list js-list-content']"))
@@ -64,6 +64,45 @@ public class CurrentBoardTests extends TestBase {
                 .findElements(By.xpath("//div[@class = 'list js-list-content']"))
                 .size());
 
+    }
+    @Test
+    public void putAnyListToArchive() throws InterruptedException {
+        //Print the quantity of lists
+        System.out.println("Lists quantity before: " + driver
+                .findElements(By.xpath("//div[@class = 'list js-list-content']"))
+                .size());
+        //If there are no lists create the new list
+        WebElement addListButton = driver.findElement(By.cssSelector("a.open-add-list"));
+        System.out.println("Text on the button: " + addListButton.getText());
+         if (addListButton.getText().equals("Add a list")){
+             addListButton.click();
+             //Fill the name of new list and submit it
+             WebElement addNamelistField = driver.findElement(By.xpath("//input[@name='name']"));
+             addNamelistField.click();
+             addNamelistField.clear();
+             addNamelistField.sendKeys("test");
+             WebElement submitNewList = driver.findElement(By.xpath("//input[@type='submit']"));
+             submitNewList.click();
+             //Cancel the new adding list control
+             WebElement xButton = driver.findElement(By.cssSelector("a.icon-close.dark-hover"));
+             xButton.click();
+             System.out.println("Lists quantity after adding the new list: " + driver
+                     .findElements(By.xpath("//div[@class = 'list js-list-content']"))
+                     .size());
+         }
+         Thread.sleep(2000);
+         addListButton =driver.findElement(By.cssSelector("a.open-add-list"));
+        System.out.println("Text on the button: " + addListButton.getText());
+        //Open the extra menu for any list
+        WebElement extraMenu = driver.findElement(By.cssSelector("a.list-header-extras-menu"));
+        extraMenu.click();
+        // Put the list to the archive
+        WebElement closeExtraMenu = driver.findElement(By.cssSelector("a.js-close-list"));
+        closeExtraMenu.click();
+        //Print the quantity of lists
+        System.out.println("Lists quantity at the end: " + driver
+                .findElements(By.xpath("//div[@class = 'list js-list-content']"))
+                .size());
     }
 
 }
