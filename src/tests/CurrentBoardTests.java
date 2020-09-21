@@ -38,7 +38,7 @@ public class CurrentBoardTests extends TestBase {
         WebElement qa7HaifaBoard = driver.findElement(By
                 .xpath("//li[@class='boards-page-board-section-list-item'][.//div[@title ='QA Haifa7']]"));
         qa7HaifaBoard.click();
-        Thread.sleep(3000);
+        Thread.sleep(5000);
     }
 
     @Test
