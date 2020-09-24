@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -13,7 +14,7 @@ import org.testng.annotations.Test;
 public class LoginTests extends TestBase {
 
     @BeforeMethod
-    public void initTests() throws InterruptedException {
+    public void initTests() {
 
         //Open login window
         WebElement loginIcon = driver.findElement(By
@@ -40,8 +41,10 @@ public class LoginTests extends TestBase {
         waitUntilElementIsPresent(By.id("error"), 10);
         //Thread.sleep(5000);
         //Print error message
-        System.out.println("Error: " + driver
-                .findElement(By.id("error")).getText());
+       /* System.out.println("Error: " + driver
+                .findElement(By.id("error")).getText());*/
+        Assert.assertEquals(driver.findElement(By.id("error")).getText(),"Missing emaill",
+                "The text of the error message is not correct");
     }
 
 
@@ -94,7 +97,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    public void loginPositive() throws InterruptedException {
+    public void loginPositive()  {
         // Enter login field for attlassian
         waitUntilElementIsClickable(By.id("user"),15);
         WebElement loginField = driver.findElement(By.id("user"));
@@ -117,9 +120,11 @@ public class LoginTests extends TestBase {
         driver.findElement(By.id("login-submit")).click();
         //Thread.sleep(30000);
         waitUntilElementIsClickable(By.xpath("//button[@data-test-id ='header-boards-menu-button']"),45);
-        System.out.println("Boards button text: " + driver
+        /*System.out.println("Boards button text: " + driver
                 .findElement(By.xpath("//button[@data-test-id ='header-boards-menu-button']"))
-                .getText());
+                .getText());*/
+        Assert.assertTrue(driver.findElement(By.xpath("//button[@data-test-id ='header-boards-menu-button']"))
+                .getText().equals("Boards"),"The text on the button is not 'Board'");
     }
 
 
