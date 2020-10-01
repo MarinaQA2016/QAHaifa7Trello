@@ -19,7 +19,7 @@ public class TestBase {
         //options.addArguments("--lang=" + "rus");
         driver = new ChromeDriver(/*options*/);
         driver.get("https://trello.com/");
-        Thread.sleep(10000);
+        //Thread.sleep(10000);
     }
     @AfterMethod
     public void tearDown(){
@@ -47,6 +47,15 @@ public class TestBase {
             e.printStackTrace();
         }
     }
+
+    public void waitUntilElementIsVisible(By locator, int time) {
+        try {
+            new WebDriverWait(driver,time).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void waitUntilElementsAreVisible(By locator, int time) {
         try {
             new WebDriverWait(driver,time).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));

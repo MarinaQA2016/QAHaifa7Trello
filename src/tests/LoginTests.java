@@ -17,6 +17,8 @@ public class LoginTests extends TestBase {
     public void initTests() {
 
         //Open login window
+        waitUntilElementIsClickable(By
+                .xpath("//*[@class='btn btn-sm btn-link text-white']"),30);
         WebElement loginIcon = driver.findElement(By
                 .xpath("//*[@class='btn btn-sm btn-link text-white']"));
         loginIcon.click();
@@ -39,11 +41,10 @@ public class LoginTests extends TestBase {
         WebElement loginButton = driver.findElement(By.id("login"));
         loginButton.click();
         waitUntilElementIsPresent(By.id("error"), 10);
-        //Thread.sleep(5000);
-        //Print error message
-       /* System.out.println("Error: " + driver
-                .findElement(By.id("error")).getText());*/
-        Assert.assertEquals(driver.findElement(By.id("error")).getText(),"Missing emaill",
+        System.out.println("Error: " + driver
+                .findElement(By.id("error")).getText());
+
+        Assert.assertEquals(driver.findElement(By.id("error")).getText(),"Missing email",
                 "The text of the error message is not correct");
     }
 
@@ -51,12 +52,14 @@ public class LoginTests extends TestBase {
 
     @Test
     public void loginNegativeLoginIncorrect() throws InterruptedException {
+        waitUntilElementIsClickable(By.id("password"),15);
+
         // Enter not existent login
         WebElement loginField = driver.findElement(By.id("user"));
         loginField.click();
         loginField.clear();
         loginField.sendKeys("123");
-        Thread.sleep(3000);
+        waitUntilElementIsClickable(By.id("login"),10);
 
         //Enter existent password
         WebElement passwordField = driver.findElement(By.id("password"));
@@ -67,33 +70,43 @@ public class LoginTests extends TestBase {
         //Press login button
         WebElement loginButton = driver.findElement(By.id("login"));
         loginButton.click();
-        Thread.sleep(5000);
+        waitUntilElementIsVisible(By.id("error"),15);
+        //Thread.sleep(5000);
         //Print error message
         System.out.println("Error: " + driver
                 .findElement(By.id("error")).getText());
+        Assert.assertEquals(driver.findElement(By.id("error")).getText(),"There isn't an account for this username",
+                "The error message is not 'There isn't an account for this username'");
     }
+
 
     @Test
     public void loginNegativePasswordIncorrect() throws InterruptedException {
+        waitUntilElementIsClickable(By.id("login"),10);
         // Enter login field for attlassian
         WebElement loginField = driver.findElement(By.id("user"));
         loginField.click();
         loginField.clear();
         loginField.sendKeys(LOGIN);
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
+        waitUntilElementIsClickable(By.xpath("//input[@value='Log in with Atlassian']"),10);
         //Submit login attlassian
-        WebElement loginAttlButton = driver.findElement(By.id("login"));
+        WebElement loginAttlButton = driver.findElement(By.xpath("//input[@value='Log in with Atlassian']"));
         loginAttlButton.click();
-        Thread.sleep(15000);
+        //Thread.sleep(15000);
+        waitUntilElementIsClickable(By.id("password"),20);
         //Enter an incorrect password and submit it
         WebElement passwordAttlField = driver.findElement(By.id("password"));
         passwordAttlField.click();
         passwordAttlField.clear();
         passwordAttlField.sendKeys(PASSWORD+"1");
         driver.findElement(By.id("login-submit")).click();
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
+        waitUntilElementIsVisible(By.id("login-error"),15);
         System.out.println("Error message: " + driver
                 .findElement(By.id("login-error")).getText());
+        Assert.assertTrue(driver.findElement(By.id("login-error")).getText().contains("Incorrect email address and"),
+                "The error message is not contains the text 'Incorrect email address and'");
     }
 
     @Test
