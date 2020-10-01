@@ -15,15 +15,12 @@ public class LoginTests extends TestBase {
 
     @BeforeMethod
     public void initTests() {
-
         //Open login window
         waitUntilElementIsClickable(By
                 .xpath("//*[@class='btn btn-sm btn-link text-white']"),30);
         WebElement loginIcon = driver.findElement(By
                 .xpath("//*[@class='btn btn-sm btn-link text-white']"));
         loginIcon.click();
-        //waitUntilElementIsVisible(By.id("password"),10);
-        //Thread.sleep(10000);
     }
 
 
@@ -51,7 +48,7 @@ public class LoginTests extends TestBase {
 
 
     @Test
-    public void loginNegativeLoginIncorrect() throws InterruptedException {
+    public void loginNegativeLoginIncorrect()  {
         waitUntilElementIsClickable(By.id("password"),15);
 
         // Enter not existent login
@@ -71,7 +68,7 @@ public class LoginTests extends TestBase {
         WebElement loginButton = driver.findElement(By.id("login"));
         loginButton.click();
         waitUntilElementIsVisible(By.id("error"),15);
-        //Thread.sleep(5000);
+
         //Print error message
         System.out.println("Error: " + driver
                 .findElement(By.id("error")).getText());
@@ -81,27 +78,29 @@ public class LoginTests extends TestBase {
 
 
     @Test
-    public void loginNegativePasswordIncorrect() throws InterruptedException {
+    public void loginNegativePasswordIncorrect()  {
         waitUntilElementIsClickable(By.id("login"),10);
         // Enter login field for attlassian
         WebElement loginField = driver.findElement(By.id("user"));
         loginField.click();
         loginField.clear();
         loginField.sendKeys(LOGIN);
-        //Thread.sleep(3000);
-        waitUntilElementIsClickable(By.xpath("//input[@value='Log in with Atlassian']"),10);
+
+
         //Submit login attlassian
+        waitUntilElementIsClickable(By.xpath("//input[@value='Log in with Atlassian']"),10);
         WebElement loginAttlButton = driver.findElement(By.xpath("//input[@value='Log in with Atlassian']"));
         loginAttlButton.click();
-        //Thread.sleep(15000);
         waitUntilElementIsClickable(By.id("password"),20);
+
         //Enter an incorrect password and submit it
         WebElement passwordAttlField = driver.findElement(By.id("password"));
         passwordAttlField.click();
         passwordAttlField.clear();
         passwordAttlField.sendKeys(PASSWORD+"1");
         driver.findElement(By.id("login-submit")).click();
-        //Thread.sleep(3000);
+
+        //waitUntilElementIsPresent(By.id("login-error"),15);
         waitUntilElementIsVisible(By.id("login-error"),15);
         System.out.println("Error message: " + driver
                 .findElement(By.id("login-error")).getText());
@@ -117,13 +116,13 @@ public class LoginTests extends TestBase {
         loginField.click();
         loginField.clear();
         loginField.sendKeys(LOGIN);
-        //Thread.sleep(3000);
         waitUntilElementIsClickable(By.xpath("//input[@value='Log in with Atlassian']"),10);
+
         //Submit login attlassian
         WebElement loginAttlButton = driver.findElement(By.id("login"));
         loginAttlButton.click();
-        //Thread.sleep(15000);
         waitUntilElementIsClickable(By.id("password"),20);
+
         //Enter attlassian password and submit it
         WebElement passwordAttlField = driver.findElement(By.id("password"));
         passwordAttlField.click();
@@ -131,11 +130,8 @@ public class LoginTests extends TestBase {
         passwordAttlField.sendKeys(PASSWORD);
         waitUntilElementIsClickable(By.id("login-submit"),10);
         driver.findElement(By.id("login-submit")).click();
-        //Thread.sleep(30000);
         waitUntilElementIsClickable(By.xpath("//button[@data-test-id ='header-boards-menu-button']"),45);
-        /*System.out.println("Boards button text: " + driver
-                .findElement(By.xpath("//button[@data-test-id ='header-boards-menu-button']"))
-                .getText());*/
+
         Assert.assertTrue(driver.findElement(By.xpath("//button[@data-test-id ='header-boards-menu-button']"))
                 .getText().equals("Boards"),"The text on the button is not 'Board'");
     }
