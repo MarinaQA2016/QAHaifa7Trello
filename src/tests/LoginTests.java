@@ -15,71 +15,34 @@ public class LoginTests extends TestBase {
 
     @BeforeMethod
     public void initTests() {
-        //Open login window
-        waitUntilElementIsClickable(By
-                .xpath("//*[@class='btn btn-sm btn-link text-white']"),30);
-        WebElement loginIcon = driver.findElement(By
-                .xpath("//*[@class='btn btn-sm btn-link text-white']"));
-        loginIcon.click();
+        waitUntilHomePageIsLoaded();
+        openLoginPage();
+        waitUntilLoginPageIsLoaded();
     }
-
-
 
     @Test
     public void loginNegativeLoginEmpty()  {
-        // Enter empty login and password
-        waitUntilElementIsClickable(By.id("password"),15);
-        WebElement passwordField = driver.findElement(By.id("password"));
-        passwordField.click();
-        passwordField.clear();
-        passwordField.sendKeys("marinaqa");
-        //Press login button
-        waitUntilElementIsClickable(By.id("login"),10);
-        WebElement loginButton = driver.findElement(By.id("login"));
-        loginButton.click();
-        waitUntilElementIsPresent(By.id("error"), 10);
-        System.out.println("Error: " + driver
-                .findElement(By.id("error")).getText());
-
-        Assert.assertEquals(driver.findElement(By.id("error")).getText(),"Missing email",
+        enterEmptyLoginAndPassword(PASSWORD);
+        pressLoginButton();
+        Assert.assertEquals(getErrorMessage(),"Missing email",
                 "The text of the error message is not correct");
     }
 
-
-
     @Test
     public void loginNegativeLoginIncorrect()  {
-        waitUntilElementIsClickable(By.id("password"),15);
-
-        // Enter not existent login
-        WebElement loginField = driver.findElement(By.id("user"));
-        loginField.click();
-        loginField.clear();
-        loginField.sendKeys("123");
-        waitUntilElementIsClickable(By.id("login"),10);
-
-        //Enter existent password
-        WebElement passwordField = driver.findElement(By.id("password"));
-        passwordField.click();
-        passwordField.clear();
-        passwordField.sendKeys("marinaqa");
-
-        //Press login button
-        WebElement loginButton = driver.findElement(By.id("login"));
-        loginButton.click();
-        waitUntilElementIsVisible(By.id("error"),15);
-
-        //Print error message
-        System.out.println("Error: " + driver
-                .findElement(By.id("error")).getText());
-        Assert.assertEquals(driver.findElement(By.id("error")).getText(),"There isn't an account for this username",
+        enterNotAttlassianLogin("123");
+        enterNotAttlassianPassword(PASSWORD);
+        pressLoginButton();
+        Assert.assertEquals(getErrorMessage(),"There isn't an account for this username",
                 "The error message is not 'There isn't an account for this username'");
     }
 
 
+
+
     @Test
     public void loginNegativePasswordIncorrect()  {
-        waitUntilElementIsClickable(By.id("login"),10);
+
         // Enter login field for attlassian
         WebElement loginField = driver.findElement(By.id("user"));
         loginField.click();
@@ -111,7 +74,6 @@ public class LoginTests extends TestBase {
     @Test
     public void loginPositive()  {
         // Enter login field for attlassian
-        waitUntilElementIsClickable(By.id("user"),15);
         WebElement loginField = driver.findElement(By.id("user"));
         loginField.click();
         loginField.clear();
@@ -137,6 +99,54 @@ public class LoginTests extends TestBase {
     }
 
 
+    private void waitUntilLoginPageIsLoaded() {
+        waitUntilElementIsClickable(By.id("password"),15);
+        waitUntilElementIsClickable(By.id("login"),10);
+        waitUntilElementIsClickable(By.id("user"),15);
+    }
 
+    private void openLoginPage() {
+        WebElement loginIcon = driver.findElement(By
+                .xpath("//*[@class='btn btn-sm btn-link text-white']"));
+        loginIcon.click();
+    }
+
+    private void waitUntilHomePageIsLoaded() {
+        waitUntilElementIsClickable(By
+                .xpath("//*[@class='btn btn-sm btn-link text-white']"),30);
+    }
+
+    public String getErrorMessage(){
+        waitUntilElementIsVisible(By.id("error"), 10);
+        return driver.findElement(By.id("error")).getText();
+    }
+
+    private void pressLoginButton() {
+        //Press login button
+        WebElement loginButton = driver.findElement(By.id("login"));
+        loginButton.click();
+    }
+
+    private void enterEmptyLoginAndPassword(String password) {
+        WebElement passwordField = driver.findElement(By.id("password"));
+        passwordField.click();
+        passwordField.clear();
+        passwordField.sendKeys(password);
+    }
+
+    private void enterNotAttlassianPassword(String password) {
+        //Enter existent password
+        WebElement passwordField = driver.findElement(By.id("password"));
+        passwordField.click();
+        passwordField.clear();
+        passwordField.sendKeys(password);
+    }
+
+    private void enterNotAttlassianLogin(String login) {
+        WebElement loginField = driver.findElement(By.id("user"));
+        loginField.click();
+        loginField.clear();
+        loginField.sendKeys(login);
+    }
 
 }

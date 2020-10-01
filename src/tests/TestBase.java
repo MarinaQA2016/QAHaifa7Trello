@@ -19,7 +19,7 @@ public class TestBase {
         //options.addArguments("--lang=" + "rus");
         driver = new ChromeDriver(/*options*/);
         driver.get("https://trello.com/");
-        //Thread.sleep(10000);
+
     }
     @AfterMethod
     public void tearDown(){
