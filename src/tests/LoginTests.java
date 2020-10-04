@@ -117,12 +117,13 @@ public class LoginTests extends TestBase {
     }
 
     public String getErrorMessage(){
-        waitUntilElementIsVisible(By.id("error"), 10);
+        waitUntilElementIsVisible(By.id("error"), 15);
         return driver.findElement(By.id("error")).getText();
     }
 
     private void pressLoginButton() {
         //Press login button
+        waitUntilElementIsClickable(By.id("login"),10);
         WebElement loginButton = driver.findElement(By.id("login"));
         loginButton.click();
     }
