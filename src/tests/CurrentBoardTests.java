@@ -8,55 +8,49 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.BoardsPageHelper;
+import pages.CurrentBoardPageHelper;
+import pages.HomePageHelper;
+import pages.LoginPageHelper;
 
 public class CurrentBoardTests extends TestBase {
+LoginPageHelper loginPage;
+BoardsPageHelper boardsPage;
+CurrentBoardPageHelper qaHafa7currentBoard;
+    HomePageHelper homePage;
 
     @BeforeMethod
-    public void initTests() throws InterruptedException {
-        //Open login window
-        WebElement loginIcon = driver.findElement(By
-                .xpath("//*[@class='btn btn-sm btn-link text-white']"));
-        loginIcon.click();
+    public void initTests()  {
+        loginPage = new LoginPageHelper(driver);
+        boardsPage = new BoardsPageHelper(driver);
+        homePage = new HomePageHelper(driver);
+        qaHafa7currentBoard = new CurrentBoardPageHelper(driver,"QA Haifa7");
 
-        waitUntilElementIsClickable(By.id("user"),15);
-        // Enter login field for attlassian
-        WebElement loginField = driver.findElement(By.id("user"));
-        loginField.click();
-        loginField.clear();
-        loginField.sendKeys(LOGIN);
-
-        waitUntilElementIsClickable(By.xpath("//input[@value='Log in with Atlassian']"),10);
-        //Submit login attlassian
-        WebElement loginAttlButton = driver.findElement(By.id("login"));
-        loginAttlButton.click();
-
-        waitUntilElementIsClickable(By.id("password"),20);
-        waitUntilElementIsClickable(By.id("login-submit"),10);
-        //Enter attlassian password and submit it
-        WebElement passwordAttlField = driver.findElement(By.id("password"));
-        passwordAttlField.click();
-        passwordAttlField.clear();
-        passwordAttlField.sendKeys(PASSWORD);
-        driver.findElement(By.id("login-submit")).click();
-
-        waitUntilElementIsClickable(By.xpath("//button[@data-test-id ='header-boards-menu-button']"),45);
-        //Open QA7Haifa board
-        WebElement qa7HaifaBoard = driver.findElement(By
-                .xpath("//li[@class='boards-page-board-section-list-item'][.//div[@title ='QA Haifa7']]"));
-        qa7HaifaBoard.click();
-        waitUntilElementIsClickable(By.id("workspaces-preamble-board-header-button"),15);
-        waitUntilElementIsPresent(By.tagName("h1"),10);
+        homePage.waitUntilPageIsLoaded();
+        homePage.openLoginPage();
+        loginPage.waitUntilPageIsLoaded();
+        loginPage.loginAsAttlassian(LOGIN,PASSWORD);
+        boardsPage.waitUntilPageIsLoaded();
+        boardsPage.openCurrentBoardPage("QA Haifa7");
+        qaHafa7currentBoard.waitUntilPageIsLoaded();
     }
+
 
     @Test
     public void isCorrectCurrentBoard(){
-        System.out.println("Header of the current board: " + driver.findElement(By.tagName("h1")).getText());
-        Assert.assertEquals(driver.findElement(By.tagName("h1")).getText(),"QA Haifa7",
+        Assert.assertEquals(qaHafa7currentBoard.getCurrentBoardHeader(),"QA Haifa7",
                 "The header of the screen is not 'QA Haifa7'");
-
     }
+
     @Test
-    public void createListPositive() throws InterruptedException {
+    public void isCorrectCurrentBoard2(){
+        Assert.assertTrue(qaHafa7currentBoard.isCorrectCurrentBoard(),
+                "The header of the screen is not 'QA Haifa7'");
+    }
+
+
+    @Test
+    public void createListPositive()  {
 
         System.out.println("Lists quantity before: " + driver
                 .findElements(By.xpath("//div[@class = 'list js-list-content']"))
