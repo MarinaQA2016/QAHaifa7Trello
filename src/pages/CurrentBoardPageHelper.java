@@ -70,4 +70,9 @@ public class CurrentBoardPageHelper extends PageBase{
         WebElement extraMenu = driver.findElement(By.cssSelector("a.list-header-extras-menu"));
         extraMenu.click();
     }
+
+    public void openMenuPage() {
+        waitUntilElementIsClickable(By.xpath("//button[@aria-label = 'Open Member Menu']"),10);
+        driver.findElement(By.xpath("//button[@aria-label = 'Open Member Menu']")).click();
+    }
 }
