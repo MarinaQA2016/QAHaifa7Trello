@@ -8,24 +8,21 @@ import org.testng.annotations.Test;
 
 public class ProfileVisabilityTest extends TestBase{
     @BeforeMethod
-    public void initTests() throws InterruptedException {
+    public void initTests()  {
         //Open login window
         WebElement loginIcon = driver.findElement(By
                 .xpath("//*[@class='btn btn-sm btn-link text-white']"));
         loginIcon.click();
-        //Thread.sleep(10000);
         waitUntilElementIsClickable(By.id("user"),15);
         // Enter login field for attlassian
         WebElement loginField = driver.findElement(By.id("user"));
         loginField.click();
         loginField.clear();
         loginField.sendKeys(LOGIN);
-        //Thread.sleep(3000);
         waitUntilElementIsClickable(By.xpath("//input[@value='Log in with Atlassian']"),10);
         //Submit login attlassian
         WebElement loginAttlButton = driver.findElement(By.id("login"));
         loginAttlButton.click();
-        //Thread.sleep(15000);
         waitUntilElementIsClickable(By.id("password"),20);
         waitUntilElementIsClickable(By.id("login-submit"),10);
         //Enter attlassian password and submit it
@@ -34,7 +31,6 @@ public class ProfileVisabilityTest extends TestBase{
         passwordAttlField.clear();
         passwordAttlField.sendKeys(PASSWORD);
         driver.findElement(By.id("login-submit")).click();
-        //Thread.sleep(30000);
         waitUntilElementIsClickable(By.xpath("//button[@data-test-id ='header-boards-menu-button']"),45);
         //Open QA7Haifa board
         WebElement qa7HaifaBoard = driver.findElement(By
