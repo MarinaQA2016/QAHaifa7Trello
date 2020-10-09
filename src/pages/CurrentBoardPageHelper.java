@@ -3,26 +3,36 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class CurrentBoardPageHelper extends PageBase{
+    @FindBy(id = "workspaces-preamble-board-header-button")
+    WebElement boardsButton;
+
+    @FindBy(tagName = "h1")
+    WebElement header;
+
     String boardName;
+
 
     public CurrentBoardPageHelper(WebDriver driver, String boardName) {
         super(driver);
         this.boardName = boardName;
+        PageFactory.initElements(driver,this);
     }
 
     public void waitUntilPageIsLoaded() {
-        waitUntilElementIsClickable(By.id("workspaces-preamble-board-header-button"),15);
-        waitUntilElementIsPresent(By.tagName("h1"),10);
+        waitUntilElementIsClickable(boardsButton,15);
+        waitUntilElementIsVisible(header,10);
     }
 
     public String getCurrentBoardHeader(){
-        return driver.findElement(By.tagName("h1")).getText();
+        return header.getText();
     }
 
     public boolean isCorrectCurrentBoard() {
-        return driver.findElement(By.tagName("h1")).getText().equals(this.boardName);
+        return header.getText().equals(this.boardName);
     }
 
     public int getListsQuantity(){
@@ -75,4 +85,6 @@ public class CurrentBoardPageHelper extends PageBase{
         waitUntilElementIsClickable(By.xpath("//button[@aria-label = 'Open Member Menu']"),10);
         driver.findElement(By.xpath("//button[@aria-label = 'Open Member Menu']")).click();
     }
+
+
 }
