@@ -21,15 +21,15 @@ HomePageHelper homePage;
         //loginPage = new LoginPageHelper(driver);
         boardsPage = PageFactory.initElements(driver, BoardsPageHelper.class);
         homePage = PageFactory.initElements(driver,HomePageHelper.class);
-        homePage.waitUntilPageIsLoaded();
-        homePage.openLoginPage();
+        homePage.waitUntilPageIsLoaded()
+                .openLoginPage();
         loginPage.waitUntilPageIsLoaded();
     }
 
     @Test
     public void loginNegativeLoginEmpty()  {
-        loginPage.loginNotAttlassian("",PASSWORD);
-        loginPage.pressLoginButton();
+        loginPage.loginNotAttlassian("",PASSWORD)
+                  .pressLoginButton();
         Assert.assertEquals(loginPage.getErrorMessage(),"Missing email",
                 "The text of the error message is not correct");
     }

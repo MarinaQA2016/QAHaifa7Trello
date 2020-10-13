@@ -71,9 +71,7 @@ public class CurrentBoardPageHelper extends PageBase{
     }
 
     public void fillTheNameAndSubmit(String name) {
-        addNamelistField.click();
-        addNamelistField.clear();
-        addNamelistField.sendKeys(name);
+        editField(addNamelistField,name);
         submitNewList.click();
     }
 

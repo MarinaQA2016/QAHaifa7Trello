@@ -25,12 +25,12 @@ public class ProfileVisibilityTest extends TestBase{
         menuPage = PageFactory.initElements(driver, MenuPageHelper.class);
         profileVisibility = PageFactory.initElements(driver, ProfileVisibilityHelper.class);
 
-        homePage.waitUntilPageIsLoaded();
-        homePage.openLoginPage();
-        loginPage.waitUntilPageIsLoaded();
-        loginPage.loginAsAttlassian(LOGIN,PASSWORD);
-        boardsPage.waitUntilPageIsLoaded();
-        boardsPage.openCurrentBoardPage("QA Haifa7");
+        homePage.waitUntilPageIsLoaded()
+                .openLoginPage();
+        loginPage.waitUntilPageIsLoaded()
+                 .loginAsAttlassian(LOGIN,PASSWORD);
+        boardsPage.waitUntilPageIsLoaded()
+                  .openCurrentBoardPage("QA Haifa7");
         qaHafa7currentBoard.waitUntilPageIsLoaded();
         qaHafa7currentBoard.openMenuPage();
         menuPage.waitUntilPageIsLoaded();

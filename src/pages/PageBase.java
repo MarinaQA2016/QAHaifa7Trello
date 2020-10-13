@@ -85,5 +85,11 @@ public class PageBase {
         }
     }
 
+    public void editField(WebElement element, String value) {
+        element.click();
+        element.clear();
+        element.sendKeys(value);
+    }
+
 
 }
