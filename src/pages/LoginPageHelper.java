@@ -4,15 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import sun.rmi.runtime.Log;
+
+import java.util.concurrent.TimeUnit;
+
 
 public class LoginPageHelper extends PageBase{
     @FindBy(id = "password")
     WebElement passwordField;
 
-    @FindBy(id = "login")
+    @FindBy(css = "#login")
     WebElement loginButton;
 
     @FindBy(id = "user")
@@ -60,8 +60,15 @@ public class LoginPageHelper extends PageBase{
     }
 
     public LoginPageHelper pressLoginButton() {
-        waitUntilElementIsClickable(loginButton,10);
-        loginButton.click();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //waitUntilElementIsClickable(loginButton,15);
+        //driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        //loginButton.click();
+        driver.findElement(By.cssSelector("#login")).click();
         return this;
     }
 

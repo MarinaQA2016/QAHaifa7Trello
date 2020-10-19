@@ -45,6 +45,20 @@ public class PageBase {
             e.printStackTrace();
         }
     }
+    public void waitUntilElementsArePresent(By locator, int time) {
+        try {
+            new WebDriverWait(driver,time).until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void waitUntilNumberOfElementsToBe(By locator, int quantity,int time) {
+        try {
+            new WebDriverWait(driver,time).until(ExpectedConditions.numberOfElementsToBe(locator,quantity));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void waitUntilElementIsInvisible(WebElement element, int time) {
         try {
@@ -77,6 +91,7 @@ public class PageBase {
             e.printStackTrace();
         }
     }
+
 
     public void waitUntilElementsAreVisible(List<WebElement> elementsList, int time) {
         try {

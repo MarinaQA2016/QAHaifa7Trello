@@ -16,12 +16,15 @@ public class BoardsPageHelper extends PageBase {
 
     public BoardsPageHelper waitUntilPageIsLoaded() {
         waitUntilElementIsClickable(boardsButton,45);
+        waitUntilElementsAreVisible(By.xpath("//li[@class = 'boards-page-board-section-list-item']"),20);
         return this;
     }
 
     public BoardsPageHelper openCurrentBoardPage(String boardName) {
+        String xpath = "//li[@class='boards-page-board-section-list-item'][.//div[@title ='" + boardName+"']]";
+        waitUntilElementIsVisible(driver.findElement(By.xpath(xpath)),15);
         WebElement board = driver.findElement(By
-                .xpath("//li[@class='boards-page-board-section-list-item'][.//div[@title ='" + boardName+"']]"));
+                .xpath(xpath));
         board.click();
         return this;
     }

@@ -63,7 +63,8 @@ public class CurrentBoardPageHelper extends PageBase{
     public void waitUntilPageIsLoaded() {
         waitUntilElementIsClickable(boardsButton,15);
         waitUntilElementIsVisible(header,10);
-        waitUntilElementsAreVisible(addCardButtonList,15);
+        waitUntilElementsAreVisible(addCardButtonList,20);
+        System.out.println("size of AddCardButtons:" + addCardButtonList.size());
     }
 
     public String getCurrentBoardHeader(){
@@ -121,6 +122,11 @@ public class CurrentBoardPageHelper extends PageBase{
         addCardButtonList.get(0).click();
         editField(cardTitleArea,title);
         submitCardButton.click();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         xCardButton.click();
 
     }
